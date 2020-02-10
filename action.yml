@@ -1,0 +1,24 @@
+name: 'Acceptance Tests'
+description: 'Acceptance Tests For `terraform-provider-github`'
+inputs:
+  GITHUB_ORGANIZATION:
+    description: 'GitHub Organization to run tests against'
+    required: true
+  GITHUB_TEST_USER:
+    description: 'GitHub user to run tests as'
+    required: true
+  GITHUB_TEST_USER_TOKEN:
+    description: 'Authentication for GitHub user to run tests as'
+    required: true
+  GITHUB_TEST_COLLABORATOR:
+    description: 'GitHub user whose grants will be managed during test runs'
+    required: true
+  GITHUB_TEST_COLLABORATOR_TOKEN:
+    description: 'Authentication for GitHub user whose grants will be managed during test runs'
+    required: true
+  GITHUB_TEMPLATE_REPOSITORY:
+    description: 'Template Repository used to test creation during test runs'
+    required: true
+runs:
+  using: docker
+  image: Dockerfile
