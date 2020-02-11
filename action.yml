@@ -7,8 +7,14 @@ inputs:
   GITHUB_TEST_USER:
     description: 'GitHub user to run tests as'
     required: true
+  GITHUB_TEST_USER_NAME:
+    description: 'Name of GitHub user to make commits with during test runs'
+    required: true
   GITHUB_TEST_USER_TOKEN:
     description: 'Authentication for GitHub user to run tests as'
+    required: true
+  GITHUB_TEST_USER_EMAIL:
+    description: 'E-mail for GitHub user to make commits with during test runs'
     required: true
   GITHUB_TEST_COLLABORATOR:
     description: 'GitHub user whose grants will be managed during test runs'
