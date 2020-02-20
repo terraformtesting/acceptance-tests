@@ -25,6 +25,9 @@ inputs:
   GITHUB_TEMPLATE_REPOSITORY:
     description: 'Template Repository used to test creation during test runs'
     required: true
+  GITHUB_TEMPLATE_REPOSITORY_RELEASE_ID:
+    description: 'Template Repository Release ID used during test runs'
+    required: true
 runs:
   using: docker
   image: Dockerfile
