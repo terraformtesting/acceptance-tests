@@ -1,6 +1,7 @@
 #!/bin/bash -l
 
 # Parse Action inputs into environment variables
+export RUN_FILTER=${RUN_FILTER}
 export GITHUB_ORGANIZATION=${INPUT_GITHUB_ORGANIZATION}
 export GITHUB_TEST_USER=${INPUT_GITHUB_TEST_USER}
 export GITHUB_TEST_USER_TOKEN=${INPUT_GITHUB_TEST_USER_TOKEN}
@@ -29,6 +30,7 @@ test_cases () {
   cut -d ' ' -f 2 | cut -d "(" -f 1 | grep TestAcc
 }
 run_test () {
+  echo $1 | egrep -q "${RUN_FILTER}" || exit 0
   TF_ACC=1 go test -v -timeout 30m  ./... -run $1
 }
 for test_case in $(test_cases); do
