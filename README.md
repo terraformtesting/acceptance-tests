@@ -6,6 +6,7 @@ Acceptance Testing For `terraform-provider-github`
 ```
 uses: terraformtesting/acceptance-tests@v1
 with:
+  RUN_FILTER: TestCasePrefix
   GITHUB_ORGANIZATION: terraformtesting
   GITHUB_TEST_USER: github-terraform-test-user
   GITHUB_TEST_USER_TOKEN: ${{ secrets.GITHUB_TEST_USER_TOKEN }}

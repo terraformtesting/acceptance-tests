@@ -1,6 +1,7 @@
 #!/bin/bash -l
 
 # Parse Action inputs into environment variables
+export RUN_FILTER=${INPUT_RUN_FILTER}
 export GITHUB_ORGANIZATION=${INPUT_GITHUB_ORGANIZATION}
 export GITHUB_TEST_USER=${INPUT_GITHUB_TEST_USER}
 export GITHUB_TEST_USER_TOKEN=${INPUT_GITHUB_TEST_USER_TOKEN}
@@ -23,14 +24,23 @@ go mod vendor
 go test -v -sweep="gh-region"
 
 # Acceptance Tests
-# FIXME: Running one test case per UNIX process yields less flaky results
+
 test_cases () {
   grep -nr "func Test" . | grep -v vendor | \
   cut -d ' ' -f 2 | cut -d "(" -f 1 | grep TestAcc
 }
+
 run_test () {
-  TF_ACC=1 go test -v -timeout 30m  ./... -run $1
+  if ! [[ "${1}" == "${RUN_FILTER}"* ]]; then
+    echo "Skipping test $1 as it does not match the RUN_FILTER (${RUN_FILTER})"
+    return 0
+  else
+    # FIXME: Running one test case per UNIX process yields less flaky results
+    TF_ACC=1 go test -v -timeout 30m  ./... -run $1
+    return $?
+  fi
 }
+
 for test_case in $(test_cases); do
    unset test_case_failed_${test_case}
    if ! run_test $test_case; then
