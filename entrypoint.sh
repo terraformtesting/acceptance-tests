@@ -42,8 +42,8 @@ run_test () {
 }
 
 for test_case in $(test_cases); do
-   unset test_case_failed_${test_case}
-   if ! run_test $test_case; then
+  unset test_case_failed_${test_case}
+  if ! run_test $test_case; then
     export test_case_failed_${test_case}=1
   fi
 done
