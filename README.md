@@ -11,6 +11,7 @@ Acceptance Testing For `terraform-provider-github`
     GITHUB_ORGANIZATION: terraformtesting
     GITHUB_TEST_USER: github-terraform-test-user
     GITHUB_TEST_USER_NAME: github-terraform-test-user
+    GITHUB_TEST_USER_EMAIL: github-terraform-test-user@github.com
     GITHUB_TEST_USER_TOKEN: ${{ secrets.GITHUB_TEST_USER_TOKEN }}
     GITHUB_TEST_COLLABORATOR: github-terraform-test-collaborator
     GITHUB_TEST_COLLABORATOR_TOKEN: ${{ secrets.GITHUB_TEST_COLLABORATOR_TOKEN }}
