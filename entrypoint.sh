@@ -27,7 +27,7 @@ go test -v -sweep="gh-region"
 
 test_cases () {
   grep -nr "func Test" . | grep -v vendor | \
-  cut -d ' ' -f 2 | cut -d "(" -f 1 | grep TestAcc
+  cut -d ' ' -f 2 | cut -d "(" -f 1 | grep -e TestAcc -e TestProvider
 }
 
 run_test () {
