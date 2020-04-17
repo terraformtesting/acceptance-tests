@@ -9,7 +9,7 @@ Acceptance Testing For `terraform-provider-github`
   with:
     RUN_FILTER: ${{ env.RUN_FILTER }}
     GITHUB_BASE_URL: https://api.github.com/
-    GITHUB_ORGANIZATION: terraformtesting
+    GITHUB_OWNER: terraformtesting
     GITHUB_TEST_USER: github-terraform-test-user
     GITHUB_TEST_USER_NAME: github-terraform-test-user
     GITHUB_TEST_USER_EMAIL: github-terraform-test-user@github.com
