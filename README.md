@@ -8,6 +8,7 @@ Acceptance Testing For `terraform-provider-github`
   uses: terraformtesting/acceptance-tests@v1.2.0
   with:
     RUN_FILTER: ${{ env.RUN_FILTER }}
+    GITHUB_BASE_URL: https://api.github.com/
     GITHUB_ORGANIZATION: terraformtesting
     GITHUB_TEST_USER: github-terraform-test-user
     GITHUB_TEST_USER_NAME: github-terraform-test-user
