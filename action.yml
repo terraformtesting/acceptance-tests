@@ -4,6 +4,9 @@ inputs:
   RUN_FILTER:
     description: 'A string to pass to `go test -run` to run a subset of tests'
     default: '*'
+  GITHUB_BASE_URL:
+    description: 'GitHub base API endpoint used during test runs'
+    required: true
   GITHUB_ORGANIZATION:
     description: 'GitHub Organization to run tests against'
     required: true
