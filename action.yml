@@ -7,6 +7,9 @@ inputs:
   GITHUB_OWNER:
     description: 'GitHub Owner to run tests as'
     required: false
+  GITHUB_BASE_URL:
+    description: 'GitHub base URL to run tests against'
+    default: https://api.github.com/
   GITHUB_ORGANIZATION:
     description: 'GitHub Organization to run tests against'
     required: true
