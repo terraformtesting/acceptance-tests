@@ -1,9 +1,12 @@
 name: 'Acceptance Tests'
 description: 'Acceptance Tests For `terraform-provider-github`'
 inputs:
-  RUN_FILTER:
-    description: 'A string to pass to `go test -run` to run a subset of tests'
-    default: '*'
+  RUN_ALL:
+    description: 'Forces running all available tests'
+    default: 'false'
+  GITHUB_OWNER:
+    description: 'GitHub Owner to run tests as'
+    required: false
   GITHUB_ORGANIZATION:
     description: 'GitHub Organization to run tests against'
     required: true
