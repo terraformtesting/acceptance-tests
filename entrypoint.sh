@@ -1,7 +1,8 @@
 #!/bin/bash -l
 
 # Parse Action inputs into environment variables
-export RUN_FILTER=${INPUT_RUN_FILTER}
+export RUN_ALL=${INPUT_RUN_ALL}
+export GITHUB_ORGANIZATION=${INPUT_GITHUB_ORGANIZATION}
 export GITHUB_BASE_URL=${INPUT_GITHUB_BASE_URL}
 export GITHUB_OWNER=${INPUT_GITHUB_OWNER}
 export GITHUB_TEST_USER=${INPUT_GITHUB_TEST_USER}

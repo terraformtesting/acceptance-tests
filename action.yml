@@ -8,7 +8,13 @@ inputs:
     description: 'GitHub base API endpoint used during test runs'
     required: true
   GITHUB_OWNER:
-    description: 'GitHub Owner to run tests against'
+    description: 'GitHub Owner to run tests as'
+    required: false
+  GITHUB_BASE_URL:
+    description: 'GitHub base URL to run tests against'
+    default: https://api.github.com/
+  GITHUB_ORGANIZATION:
+    description: 'GitHub Organization to run tests as'
     required: true
   GITHUB_TEST_USER:
     description: 'GitHub user to run tests as'
