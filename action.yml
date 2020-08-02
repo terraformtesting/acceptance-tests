@@ -4,9 +4,6 @@ inputs:
   RUN_ALL:
     description: 'Forces running all available tests'
     default: 'false'
-  GITHUB_BASE_URL:
-    description: 'GitHub base API endpoint used during test runs'
-    required: true
   TF_LOG:
     description: 'TF_LOG environment variable used during test runs'
     default: ''
