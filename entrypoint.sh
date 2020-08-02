@@ -39,7 +39,7 @@ run_test () {
     return 0
   else
     # FIXME: Running one test case per UNIX process yields less flaky results
-    TF_ACC=1 go test -v -timeout 30m  ./... -run $1
+    TF_LOG=${INPUT_TF_LOG} TF_ACC=1 go test -v -timeout 30m  ./... -run $1
     return $?
   fi
 }
