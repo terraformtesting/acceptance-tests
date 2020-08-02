@@ -2,6 +2,7 @@
 
 # Parse Action inputs into environment variables
 export RUN_ALL=${INPUT_RUN_ALL}
+export TF_LOG=${INPUT_TF_LOG}
 export GITHUB_ORGANIZATION=${INPUT_GITHUB_ORGANIZATION}
 export GITHUB_BASE_URL=${INPUT_GITHUB_BASE_URL}
 export GITHUB_OWNER=${INPUT_GITHUB_OWNER}

@@ -4,6 +4,9 @@ inputs:
   RUN_ALL:
     description: 'Forces running all available tests'
     default: 'false'
+  TF_LOG:
+    description: 'TF_LOG environment variable used during test runs'
+    default: ''
   GITHUB_OWNER:
     description: 'GitHub Owner to run tests as'
     required: false
