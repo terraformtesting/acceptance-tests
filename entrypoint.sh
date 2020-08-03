@@ -18,43 +18,86 @@ export GITHUB_TEMPLATE_REPOSITORY_RELEASE_ID=${INPUT_GITHUB_TEMPLATE_REPOSITORY_
 # Set GITHUB_TOKEN
 export GITHUB_TOKEN="${GITHUB_TEST_USER_TOKEN}"
 
-# Setup Go Environment
-go mod init
-go mod tidy
-go mod vendor
+# Acceptance Test Functions
 
-# Pre-Sweeper
-go test -v -sweep="gh-region"
+generate_test_fixtures () {
+  openssl req -x509 -newkey rsa:4096 -days 1 -nodes \
+    -subj "/C=US/ST=CA/L=San Francisco/O=HashiCorp, Inc./CN=untrusted" \
+    -keyout github/test-fixtures/key.pem -out github/test-fixtures/cert.pem
+}
 
-# Acceptance Tests
+modified_files () {
+  git show --pretty="" --name-only HEAD | tr '\n' ' '
+}
+
+test_files_for_modified_files () {
+  for f in $(modified_files); do
+    find . | grep $(basename -s .go $f)
+  done | grep _test | sort | uniq | tr '\n' ' '
+}
+
+test_cases_from_modified_files () {
+  if [ -z "$(test_files_for_modified_files)" ]; then
+    return
+  else
+    grep -nr "func Test" $(test_files_for_modified_files) | \
+    cut -d ' ' -f 2 | cut -d "(" -f 1 | grep -e TestAcc -e TestProvider | \
+    tr '\n' ' '
+  fi
+}
+
+all_test_cases () {
+  grep -nr "func Test" . | grep -v vendor | \
+  cut -d ' ' -f 2 | cut -d "(" -f 1 | grep -e TestAcc -e TestProvider | \
+  tr '\n' ' '
+}
 
 test_cases () {
-  grep -nr "func Test" . | grep -v vendor | \
-  cut -d ' ' -f 2 | cut -d "(" -f 1 | grep -e TestAcc -e TestProvider
+  if [ "$RUN_ALL" = "true" ]; then
+    all_test_cases
+  else
+    test_cases_from_modified_files
+  fi
 }
 
 run_test () {
-  if ! [[ "${1}" == "${RUN_FILTER}"* ]]; then
-    echo "Skipping test $1 as it does not match the RUN_FILTER (${RUN_FILTER})"
-    return 0
-  else
-    # FIXME: Running one test case per UNIX process yields less flaky results
-    TF_LOG=${INPUT_TF_LOG} TF_ACC=1 go test -v -timeout 30m  ./... -run $1
-    return $?
-  fi
+  # FIXME: Running one test case per UNIX process yields less flaky results
+  TF_LOG=${INPUT_TF_LOG} TF_ACC=1 go test -v -timeout 30m  ./... -run $1
+  return $?
 }
 
-for test_case in $(test_cases); do
-  unset test_case_failed_${test_case}
-  if ! run_test $test_case; then
-    export test_case_failed_${test_case}=1
+main () {
+
+  # Exit early if no test cases will run
+  if [ -z "$(test_cases)" ]; then
+    echo "No test cases eligible to run, exiting."
+    return 0
   fi
-done
 
-# Post-Sweeper
-go test -v -sweep="gh-region"
+  # Setup Go Environment
+  go mod init
+  go mod tidy
+  go mod vendor
 
-# Exit with a failure if any test cases failed
-for failed_test_case in $(env | grep "test_case_failed_"); do
-  exit 1
-done
+  # Pre-Sweeper
+  go test -v -sweep="gh-region"
+
+  generate_test_fixtures
+
+  for test_case in $(test_cases); do
+    unset test_case_failed_${test_case}
+    if ! run_test $test_case; then
+      export test_case_failed_${test_case}=1
+    fi
+  done
+
+  # Post-Sweeper
+  go test -v -sweep="gh-region"
+
+  # Exit with a failure if any test cases failed
+  for failed_test_case in $(env | grep "test_case_failed_"); do
+    exit 1
+  done
+}
+
+main $@
