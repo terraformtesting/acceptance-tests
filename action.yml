@@ -20,8 +20,11 @@ inputs:
     description: 'GitHub user to run tests as'
     required: true
   GITHUB_TEST_ORGANIZATION:
-    description: 'GitHub organization to configure tests with'
+    description: 'GitHub organization to support testing individual mode'
     default: terraformtesting
+  GITHUB_TEST_OWNER:
+    description: 'GitHub owner to support testing organization mode'
+    default: github-terraform-test-user
   GITHUB_TEST_USER_NAME:
     description: 'Name of GitHub user to make commits with during test runs'
     required: true
