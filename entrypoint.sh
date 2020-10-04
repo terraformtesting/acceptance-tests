@@ -2,6 +2,7 @@
 
 # Parse Action inputs into environment variables
 export RUN_ALL=${INPUT_RUN_ALL}
+export RUN_ALLOWED=${INPUT_RUN_ALLOWED}
 export TF_LOG=${INPUT_TF_LOG}
 export GITHUB_ORGANIZATION=${INPUT_GITHUB_ORGANIZATION}
 export GITHUB_BASE_URL=${INPUT_GITHUB_BASE_URL}
@@ -55,7 +56,9 @@ all_test_cases () {
 }
 
 test_cases () {
-  if [ "$RUN_ALL" = "true" ]; then
+  if ! [ "$RUN_ALLOWED" = "" ]; then
+    echo $RUN_ALLOWED
+  elif [ "$RUN_ALL" = "true" ]; then
     all_test_cases
   else
     test_cases_from_modified_files
