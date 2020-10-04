@@ -1,5 +1,8 @@
 name: 'Acceptance Tests'
 description: 'Acceptance Tests For `terraform-provider-github`'
+outputs:
+  failed:
+    description: 'Failed test cases (comma-separated)'
 inputs:
   RUN_ALL:
     description: 'Forces running all available tests'

@@ -68,6 +68,10 @@ run_test () {
   return $?
 }
 
+failed_test_cases () {
+  env | grep "test_case_failed_" | sed 's/test_case_failed_ //' | tr ',' '\n'
+}
+
 main () {
 
   # Exit early if no test cases will run
@@ -96,10 +100,14 @@ main () {
   # Post-Sweeper
   go test -v -sweep="gh-region"
 
+  # Output failed test cases
+  echo "::set-output name=failed::$(failed_test_cases)"
+
   # Exit with a failure if any test cases failed
   for failed_test_case in $(env | grep "test_case_failed_"); do
     exit 1
   done
+
 }
 
 main $@
