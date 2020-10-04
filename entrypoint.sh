@@ -69,7 +69,7 @@ run_test () {
 }
 
 failed_test_cases () {
-  env | grep "test_case_failed_" | sed 's/test_case_failed_ //' | tr ',' '\n'
+  env | grep "test_case_failed_" | sed 's/test_case_failed_ //' | tr '\n' ' '
 }
 
 main () {
